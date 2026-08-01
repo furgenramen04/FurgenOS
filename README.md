@@ -1,2 +1,3 @@
 # FurgenOS
-My very own first WebOS.
+A simple website that is smooth, fun and modern.
+https://github.com/furgenramen04/FurgenOS.git
