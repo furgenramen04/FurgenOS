@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <body style= "background-image: url(./scenic\ forest\ background.jpg);background-size: cover;height: 100vh; font-family: Optima, sans-serif; background-color: #bfd8e0;">
-    <div style = "backdrop-filter: blur(10px); position:absolute;top: 50%; left:50%; transform: translate(-50%,-50%); padding-bottom: 10px;padding-left: 10px; border-radius: 20px; border:solid; width: 675px">
-      <h2 style = " margin: 10px; color:rgb(186, 15, 15)"> SUIII</h2>
-      <p style = " margin: 10px; color: #8f2222">Ronaldo isn't just another football player. He's not like Messi or Neymar.<br>He gave a country a place in football and put them on the map. <br>From just another country, Portugal rose as one of football's superpowers, <br> competing with Brazil, Argentina and Germany.</p>
-      <img style = "border-radius:16px; object-fit:cover; width: 225px; height: 250px" src="./Ronaldo Man Utd.jpg" />
-      <a href="https://en.wikipedia.org/wiki/Cristiano_Ronaldo">Cristiano Ronaldo</a>
-    </div> 
+  
+  <head>
+    <meta charset="UTF-8">
+    <script type="module" src="./script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
 
+
+  <body style= "display:flex; width: 100%; height: 100vh; background-image: url(./sunset\ wallpaper.jpg);background-size: cover; font-family: Optima, sans-serif; background-color: #bfd8e0;">
+    
+    <div id="top" style = "border-radius:10px; position:absolute; width: 99.5%; display:flex; background-color: rgba(0, 0, 0, 0.4); color:#fff; justify-content: space-between;">
+      <p style = "background-color: rgba(0, 0, 0, 0.4); color:gold; border-radius: 10px; padding: 5px;"> FurgenOS </p>
+      <p id="welcomeopen" style = "cursor:pointer; border-radius:10px; padding: 5px; background-color: rgba(0, 0, 0, 0.4); color:#7fa291;">
+        Messing Around 🫪
+      </p>
+      <p id="timeElement" style = "background-color: rgba(0, 0, 0, 0.4); color:gold; border-radius:10px; padding: 5px;"> Time </p>
+    </div>
+
+    <div id="todoopen" style="padding-top:64px; padding-left:10px">
+      <div class="selected" style="text-align: center; width:fit-content; position:relative; top:40px; border-radius:15px; border:solid; border-color: #2994b8; background-color: #bfd8e0;">
+       <img src="ronaldo signature.png" style="padding:5px; width:50px; height:40px; object-fit:cover;">
+      </div>
+    </div>
+    
+    <div class="window" id="todo" style="display:none;top: 50%; left:50%; transform: translate(-50%,-50%) ">
+      <div class="header" id="todoheader" style="background-color: rgb(204, 86, 49);border-color:#eb570d; border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+        <h3 style="flex:1; display:flex; align-items:center; justify-content:center; margin:0; color:rgb(179, 4, 13);">Ronaldo Quotes (mostly)</h3>
+        <img class="closebutton" id="todoclose" src="./sick rim no background.png">
+      </div>
+      <div style="display:flex; flex-direction:row; height:250px; border-color:#eb570d;">
+        <div id="quoteSidebar" style="width:150px; background-color: rgb(163, 63, 21); overflow-y:scroll; border-bottom-left-radius:10px; flex-shrink:0;">
+        </div>
+        <div id="quoteContent" style="flex:1; padding:10px; overflow-y:scroll; color:aliceblue; background-image:url('./Ronaldo\ Man\ Utd.jpg'); background-position:center top; background-size:cover; background-repeat:no-repeat; border-bottom-right-radius:10px;">
+        </div>
+      </div>
+    </div> 
+  
+    
+    <div class="window" id="welcome" style="top: 50%; left:50%; transform: translate(-50%,-50%);">
+      <div class="header" id="welcomeheader">
+        <h3 style="flex:1; display:flex; align-items:center; justify-content:center; margin:0; color:rgb(44, 133, 228);">Welcome to FurgenOS</h3>
+        <img class="closebutton" id="welcomeclose" src="./sick rim no background.png">
+      </div>
+      <p style = "padding:10px; margin: 10px; color: #5e88d6">FurgenOS is a simple operating system. <br>It may be very limited and boring now, but in time<br> it will be (subjectively) the best OS on the internet.</p> <p style ="margin-left:10px; color:rgb(208, 92, 92)">Note: Once you close this window, you will need to reload the webpage to get it again. (I'm working on a solution)</p>
+      <img style = "padding:10px;border-radius:16px; object-fit:cover; width: 400px; height: 250px" src="./lexus lfa sydney.jpg" />
+    </div>
+    
+     <script src="./script.js"></script>
   </body>
 </html>
