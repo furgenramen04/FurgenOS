@@ -1,3 +1,32 @@
+var randomSites = ['https://theuselessweb.com/',
+  'https://neal.fun/',
+  'https://pointerpointer.com/',
+  'https://eelslap.com/',
+  'https://cat-bounce.com/',
+  'https://zoomquilt.org/',
+  'https://patatap.com/',
+  'https://radio.garden/',
+  'https://trypap.com/',
+  'https://papertoilet.com/',
+  'https://endless.horse/',
+  'https://window-swap.com/',
+  'https://mapcrunch.com/',
+  'https://wikiroulette.co/',
+  'https://hackertyper.com/',
+  'https://www.fallingfalling.com/',
+  'https://www.koalastothemax.com/',
+  'https://zombo.com/',
+  'https://www.windows93.net/',
+  'https://www.thispersondoesnotexist.com/',
+  'https://boredbutton.com/',
+  'https://www.donothingfor2minutes.com/',
+  'https://crouton.net/',
+  'https://pixelthoughts.co/',
+  'https://www.bouncingdvdlogo.com/',
+  'https://scp-wiki.wikidot.com/',
+  'https://www.spacejam.com/1996/',
+  'https://csszengarden.com/']
+
 function updateTime() {
         var currentTime = new Date().toLocaleString();
         var timeText = document.querySelector("#timeElement");
@@ -21,7 +50,7 @@ function dragElement(elmnt) {
   }
 
   function dragMouseDown(e) {
-    e = e || window.event;
+    e = e || window.event; 
     e.preventDefault();
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
@@ -64,12 +93,16 @@ var welcomeScreenClose = document.querySelector("#welcomeclose");
 
 var welcomeScreenOpen = document.querySelector("#welcomeopen");
 
+
+
 welcomeScreenClose.addEventListener("click", function() {
   closeWindow(welcomeScreen);
 });
 
 welcomeScreenOpen.addEventListener("click", function() {
-  openWindow(welcomeScreen);
+  var randomIndex = Math.floor(Math.random() * randomSites.length);
+  var chosenSite = randomSites[randomIndex];
+  window.open(chosenSite);
 });
 
 var selectedIcon = undefined
@@ -166,6 +199,13 @@ var quotes = [
     date: "November 2015",
     content: `<p>"In my mind, I am always the best."</p> <p style="font-size:12px; opacity:0.8;">Gotta be one of the most iconic Ronaldo quotes.</p>`
   },
+  { 
+    title:"On Criticism",
+    date:"August 23, 2015",
+    content: `</p>"Your love makes me stronger, your hate makes me unstoppable."</p>`
+
+
+  }
 ]
 
 
