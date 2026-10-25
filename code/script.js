@@ -237,3 +237,78 @@ for (let i = 0; i < quotes.length; i++) {
 }
 
 setQuoteContent(0);
+
+const wallpaperbutton = document.getElementById("changewallpaper")
+const wallpaperinput = document.getElementById("wallpaperinput")
+const savedwallpaper = localStorage.getItem("furgenwallpaper")
+
+if (savedWallpaper) {
+  document.body.style.backgroundImage = `url("${savedwallpaper}")`
+}
+
+wallpaperbutton.addEventListener("click", () => {
+  wallpaperinput.click();
+})
+
+wallpaperinput.addEventListener("change", ()=> {
+  const file = wallpaperinput.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image.");
+    return;
+  }
+  
+  const reader = new FileReader();
+
+  reader.onload() = () => {
+    const image = new Image();
+
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const maxWidth = 1920;
+      const maxHeight = 1080;
+      const scale = Math.min(
+        1,
+        maxWidth/image.width,
+        maxHeight/image.height
+      );
+      
+      canvas.width = Math.round(image.width*scale);
+      canvas.height = Math.round(image.height*scale);
+
+      const context = canvas.getContext("2d");
+      context.drawImage(
+        image,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const wallpaper = canvas.toDataURL("image/jpeg", 0.85);
+
+      try {
+        localStorage.setItem("furgenwallpaper", wallpaper);
+        document.body.style.backgroundImage = `url("${wallpaper}")`;
+      } catch (error) {
+                alert("The wallpaper could not be saved. Try a smaller image.");
+            }
+        };
+
+        image.onerror = () => {
+            alert("This image could not be loaded.");
+        };
+
+        image.src = reader.result;
+    };
+
+    reader.readAsDataURL(file);
+});
+
+
+  
+
+
+
