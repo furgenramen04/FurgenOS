@@ -152,3 +152,29 @@
 #pongopen:hover {
     filter: brightness(1.25);
 }
+
+/* ---- Snake Game ---- */
+
+#snakeWindow {
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+#snakeWindow .header {
+    flex-shrink: 0;
+}
+
+#snakeCanvas {
+    image-rendering: pixelated;
+}
+
+#snakeStart:hover,
+#snakePause:hover {
+    background: #28543e;
+}
+
+#snakeopen:hover {
+    filter: brightness(1.25);
+}

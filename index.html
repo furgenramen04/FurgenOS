@@ -43,10 +43,18 @@
       <div style="text-align:center; width:fit-content; border-radius:15px; border:solid 1px #8dbce3; background:rgba(10,20,35,0.8);">
         <div style="width:50px; height:40px; display:flex; align-items:center; justify-content:center; color:#8dbce3; font-size:25px;">▥</div>
       </div>
-        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Pong</p>
+        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">FootPong</p>
     </div>
+
+    <div id="snakeopen" style="cursor:pointer; padding-left: 10px; padding-top:64px; width:fit-content">
+      <div style="text-align:center; width:fit-content; border-radius: 15px; border:solid; border-color:#2994b8; background-color:#6BB5CF;">
+        <img src="./snek.jpg" style="object-fit:cover; height:50px; width:50px; padding-top:5px; border-radius:8px;";>
+      </div>
+   </div>
+
     
-    <div id="todoopen" style="padding-top:64px; padding-left:10px">
+    
+    <div id="todoopen" style="padding-top:64px; padding-left:10px; cursor:pointer;">
       <div class="selected" style="text-align: center; width:fit-content; position:relative; top:40px; border-radius:15px; border:solid; border-color: #2994b8; background-color: #bfd8e0;">
        <img src="ronaldo signature.png" style="padding:5px; width:50px; height:40px; object-fit:cover;">
       </div>
@@ -71,7 +79,7 @@
         <h3 style="flex:1; display:flex; align-items:center; justify-content:center; margin:0; color:rgb(44, 133, 228);">Welcome to FurgenOS</h3>
         <img class="closebutton" id="welcomeclose" src="./sick rim no background.png">
       </div>
-      <p style = "padding:10px; margin: 10px; color: #5e88d6">FurgenOS is a simple operating system. <br>It may be very limited and boring now, but in time<br> it will be (subjectively) the best OS on the internet.</p> <p style ="margin-left:10px; color:rgb(208, 92, 92)">Note: Once you close this window, you will need to reload the webpage to get it again. (I'm working on a solution)</p>
+      <p style = "padding:10px; margin: 10px; color: #5e88d6">FurgenOS is a simple operating system. <br>It may be very limited and boring now, but in time<br> it will be (subjectively) the best OS on the internet.</p> <p style ="margin-left:10px; color:rgb(208, 92, 92)">Note: Once you close this window, you can click the button "FurgenOS" (top-left) <br> to reopen it.</p>
       <img style = "padding:10px;border-radius:16px; object-fit:cover; width: 400px; height: 250px" src="./lexus lfa sydney.jpg" />
     </div>
 
@@ -80,15 +88,25 @@
 
   <div class="header" id="pongWindowheader"
        style="width:100%; box-sizing:border-box; background:rgba(30,45,65,0.95);">
-    <h3 style="flex:1; text-align:center; margin:0; color:#8dbce3;">FurgenOS Pong</h3>
+    <h3 style="flex:1; text-align:center; margin:0; color:#8dbce3;">FootPong</h3>
     <img class="closebutton" id="pongClose" src="./sick rim no background.png">
   </div>
 
+  
+<div style="margin-bottom:12px; color:white;">
+  <label for="pongMode">Game mode: </label>
+  <select id="pongMode" style="padding:6px; border-radius:6px; background:#1c3047; color:white; border:1px solid #8dbce3;">
+    <option value="single">Single Player</option>
+    <option value="two">Two Players</option>
+  </select>
+</div>
+
+  
   <div style="padding:15px; color:white; text-align:center;">
     <div style="display:flex; justify-content:space-around; margin-bottom:12px; font-size:18px;">
-      <span>YOU: <span id="pongPlayerScore">0</span></span>
-      <span id="pongStatus">Ready to play</span>
-      <span>CPU: <span id="pongCpuScore">0</span></span>
+      <span>Man United: <span id="pongPlayerScore">0</span></span>
+      <span id="pongStatus">Play Pong!</span>
+      <span>Chelsea: <span id="pongCpuScore">0</span></span>
     </div>
 
     <canvas id="pongCanvas"
@@ -97,7 +115,7 @@
     </canvas>
 
     <p style="font-size:12px; color:#aab7cb;">
-      W / S or ↑ / ↓ to move
+      WASD for Red, Arrow Keys for Blue
     </p>
 
     <button id="pongStart"
@@ -106,6 +124,45 @@
     </button>
   </div>
 </div>
+
+
+<div class="window" id="snakeWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:min(520px,95vw); background:rgba(10,20,25,0.96); border-color:#78dba9;">
+
+  <div class="header" id="snakeWindowheader"
+       style="width:100%; box-sizing:border-box; background:rgba(20,45,38,0.98);">
+    <h3 style="flex:1; text-align:center; margin:0; color:#78dba9;">Snake</h3>
+    <img class="closebutton" id="snakeClose" src="./sick rim no background.png">
+  </div>
+
+  <div style="padding:15px; color:white; text-align:center;">
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+      <span>Score: <span id="snakeScore">0</span></span>
+      <span>Best: <span id="snakeBest">0</span></span>
+    </div>
+
+    <canvas id="snakeCanvas" width="400" height="400"
+      style="display:block; width:100%; max-width:400px; height:auto; margin:auto; background:#071510; border:1px solid #315b47; border-radius:5px;">
+    </canvas>
+
+    <p id="snakeStatus" style="color:#78dba9;">Press Start to play</p>
+
+    <button id="snakeStart"
+      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      Start Game
+    </button>
+
+    <button id="snakePause"
+      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      Pause
+    </button>
+
+    <p style="font-size:12px; color:#aab7cb;">
+      Arrow keys or WASD to move
+    </p>
+  </div>
+</div>
+
     
     <script type="module" src="./script.js"></script>
      
