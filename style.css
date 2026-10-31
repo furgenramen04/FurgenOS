@@ -178,3 +178,784 @@
 #snakeopen:hover {
     filter: brightness(1.25);
 }
+
+
+#visitorBook {
+  color: white;
+  border: 1px solid #8bd8c7;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#visitorBook .header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #8bd8c7;
+  cursor: move;
+}
+
+#visitorBook input,
+#visitorBook textarea {
+  font-family: Optima, sans-serif;
+  font-size: 14px;
+  color: white;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #668a89;
+  border-radius: 6px;
+}
+
+#visitorBook button {
+  background: #8bd8c7;
+  color: #102d2a;
+  border: none;
+  padding: 9px 13px;
+  border-radius: 6px;
+  font-family: Optima, sans-serif;
+  cursor: pointer;
+}
+
+#visitorBook button:hover {
+  background: #b4f0e2;
+}
+
+.visitor-entry {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(139, 216, 199, 0.4);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+
+.visitor-entry strong {
+  color: #8bd8c7;
+}
+
+.visitor-entry small {
+  display: block;
+  color: #aabfc2;
+  margin-top: 4px;
+  font-size: 10px;
+}
+
+.visitor-entry p {
+  white-space: pre-wrap;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+
+/* ==================================
+   FURGENOS - 90s RETRO THEME
+   ================================== */
+
+/* ---- App windows ---- */
+
+.window:not(#welcome) {
+    border-radius: 0 !important;
+    border: 2px solid #808080 !important;
+    background: #c0c0c0 !important;
+    backdrop-filter: none !important;
+    box-shadow:
+        inset 1px 1px white,
+        inset -1px -1px #404040,
+        3px 3px 0 rgba(0,0,0,0.3);
+    color: black;
+}
+
+/* ---- App title bars ---- */
+
+.window:not(#welcome) .header {
+    width: 100%;
+    box-sizing: border-box;
+    height: 32px;
+    min-height: 32px;
+    padding: 3px 5px;
+    border-radius: 0 !important;
+    background: linear-gradient(
+        90deg,
+        #000080,
+        #1084d0
+    ) !important;
+    border: none;
+    flex-shrink: 0;
+}
+
+.window:not(#welcome) .header h3 {
+    color: white !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+}
+
+/* ---- Close buttons ---- */
+
+.window:not(#welcome) .closebutton {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: white #404040 #404040 white;
+    border-radius: 0;
+}
+
+/* ---- App buttons ---- */
+
+.window:not(#welcome) button {
+    border-radius: 0 !important;
+    background: #c0c0c0 !important;
+    color: black !important;
+    border: 2px solid;
+    border-color: white #404040 #404040 white;
+    font-family: Arial, sans-serif !important;
+    cursor: pointer;
+}
+
+.window:not(#welcome) button:active {
+    border-color: #404040 white white #404040;
+}
+
+/* ---- Ronaldo Quotes ---- */
+
+#todo {
+    background: #c0c0c0 !important;
+    color: black !important;
+}
+
+#quoteSidebar {
+    background: #808080 !important;
+    border-radius: 0 !important;
+    color: white !important;
+}
+
+#quoteContent {
+    background: #c0c0c0 !important;
+    border-radius: 0 !important;
+    color: black !important;
+}
+
+.quoteEntry {
+    border-radius: 0 !important;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #555;
+}
+
+.quoteEntry:hover,
+.selected {
+    background: #000080 !important;
+    color: white !important;
+}
+
+/* ---- Football Pong ---- */
+
+#pongWindow {
+    background: #c0c0c0 !important;
+    backdrop-filter: none !important;
+    border-radius: 0 !important;
+}
+
+#pongCanvas {
+    border: 3px inset #808080;
+    border-radius: 0 !important;
+}
+
+/* ---- Snake ---- */
+
+#snakeWindow {
+    background: #c0c0c0 !important;
+    backdrop-filter: none !important;
+    border-radius: 0 !important;
+}
+
+#snakeCanvas {
+    border: 3px inset #808080;
+    border-radius: 0 !important;
+}
+
+/* ---- Visitor's Book ---- */
+
+#visitorBook {
+    background: #c0c0c0 !important;
+    color: black !important;
+    border: 2px solid #808080 !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+}
+
+#visitorBook .header {
+    border-bottom: none;
+}
+
+#visitorBook input,
+#visitorBook textarea {
+    background: white !important;
+    color: black !important;
+    border: 2px inset #808080 !important;
+    border-radius: 0 !important;
+    font-family: Arial, sans-serif !important;
+}
+
+.visitor-entry {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #808080 !important;
+    border-radius: 0 !important;
+}
+
+.visitor-entry strong {
+    color: #000080 !important;
+}
+
+.visitor-entry small {
+    color: #555 !important;
+}
+
+/* ---- Desktop app icons ---- */
+
+#pongopen > div,
+#snakeopen > div,
+#visitorbookopen > div {
+    border-radius: 0 !important;
+}
+
+
+/* ---- FurgenOS Retro Calendar ---- */
+
+#calendarWindow {
+    background: #c0c0c0 !important;
+    border: 2px solid #808080 !important;
+    border-radius: 0 !important;
+    color: black !important;
+    backdrop-filter: none !important;
+}
+
+#calendarContent {
+    padding: 15px;
+    font-family: Arial, sans-serif;
+}
+
+#calendarControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+#calendarControls select {
+    flex: 1;
+    min-width: 0;
+    padding: 6px;
+    background: white;
+    color: black;
+    border: 2px inset #808080;
+    border-radius: 0;
+}
+
+#calendarControls button {
+    min-width: 35px;
+    padding: 5px;
+}
+
+#calendarWeekdays,
+#calendarDays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+#calendarWeekdays div {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 0;
+    background: #808080;
+    color: white;
+}
+
+#calendarDays button {
+    min-width: 0;
+    height: 48px;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    font-size: 13px;
+}
+
+#calendarDays button:disabled {
+    visibility: hidden;
+}
+
+#calendarDays button.calendar-event {
+    background: #000080 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+#calendarDays button.calendar-selected {
+    outline: 2px dotted black;
+    outline-offset: -4px;
+}
+
+.calendar-event-dot {
+    width: 5px;
+    height: 5px;
+    background: #ffcc00;
+}
+
+#calendarDetails {
+    margin-top: 15px;
+    padding: 10px;
+    background: #d4d0c8;
+    border: 2px inset #808080;
+    min-height: 65px;
+}
+
+#calendarDetails h4 {
+    margin: 0 0 8px;
+    color: #000080;
+}
+
+#calendarDetails p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* ---- Retro Virus Simulation ---- */
+
+#virusScreen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    background: #000;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#virusWindow {
+    width: min(500px, 90vw);
+    background: #c0c0c0;
+    border: 3px outset #fff;
+    color: black;
+    font-family: Arial, sans-serif;
+    z-index: 2;
+}
+
+#virusTitle {
+    background: #000080;
+    color: white;
+    padding: 7px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#virusContent {
+    padding: 20px;
+    text-align: center;
+}
+
+#virusContent h1 {
+    color: red;
+    font-family: "Courier New", monospace;
+    font-size: 24px;
+    animation: virusFlash 0.5s infinite alternate;
+}
+
+#virusProgress {
+    height: 18px;
+    border: 2px inset #808080;
+    background: white;
+    margin: 20px 0 5px;
+}
+
+#virusProgressBar {
+    width: 0%;
+    height: 100%;
+    background: #008000;
+}
+
+#virusPercent {
+    font-family: "Courier New", monospace;
+}
+
+#virusClose {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border: 2px outset white;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+#virusGlitch {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent 0px,
+        rgba(0,255,0,0.08) 2px,
+        transparent 4px
+    );
+    animation: virusGlitch 0.15s infinite;
+}
+
+@keyframes virusFlash {
+    from { opacity: 1; }
+    to { opacity: 0.3; }
+}
+
+@keyframes virusGlitch {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(3px); }
+    50% { transform: translateX(-3px); }
+    75% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+}
+/* ---- Calendar Event Creation ---- */
+
+#calendarAddEvent {
+    display: flex;
+    gap: 5px;
+    margin-top: 12px;
+}
+
+#calendarNewEvent {
+    flex: 1;
+    min-width: 0;
+    padding: 7px;
+    border: 2px inset #808080;
+    border-radius: 0;
+    background: white;
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+#calendarAddButton {
+    padding: 7px 12px;
+    border: 2px outset white;
+    border-radius: 0;
+    background: #c0c0c0;
+    color: black;
+    cursor: pointer;
+}
+
+#calendarUserEvents {
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.calendar-user-event {
+    padding: 5px;
+    margin-top: 4px;
+    background: #e4e1d8;
+    border: 1px solid #808080;
+    color: black;
+}
+
+/* ---- Retro Calculator ---- */
+
+#calculatorWindow {
+    background: #c0c0c0 !important;
+    border: 2px solid #808080 !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+}
+
+#calculatorContent {
+    padding: 12px;
+    background: #c0c0c0;
+}
+
+#calculatorDisplay {
+    box-sizing: border-box;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 10px;
+    padding: 5px 8px;
+    background: white;
+    color: black;
+    border: 2px inset #808080;
+    border-radius: 0;
+    text-align: right;
+    font-family: "Courier New", monospace;
+    font-size: 22px;
+}
+
+#calculatorButtons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+#calculatorButtons button {
+    height: 42px;
+    background: #c0c0c0;
+    color: black;
+    border: 2px outset white;
+    border-radius: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#calculatorButtons button:active {
+    border-style: inset;
+}
+
+#calculatorButtons .calculatorEquals {
+    background: #000080;
+    color: white;
+}
+
+/* ---- FurgenOS Notebook ---- */
+
+#notebookWindow {
+    background: #c0c0c0 !important;
+    border: 2px solid #808080 !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    overflow: hidden;
+}
+
+#notebookWindow .header {
+    flex-shrink: 0;
+}
+
+#notebookContent {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    font-family: Arial, sans-serif;
+    background: #c0c0c0;
+}
+
+#notebookSidebar {
+    width: 190px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #808080;
+    min-height: 0;
+}
+
+#notebookToolbar {
+    display: flex;
+    gap: 4px;
+    padding: 7px;
+    border-bottom: 1px solid #808080;
+}
+
+#notebookToolbar button {
+    flex: 1;
+    padding: 6px 3px;
+    border: 2px outset white;
+    border-radius: 0;
+    background: #c0c0c0;
+    color: black;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#notebookList {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.notebookEntry {
+    padding: 10px;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+.notebookEntry:hover {
+    background: #dcdcdc;
+}
+
+.notebookEntry.selected {
+    background: #000080;
+    color: white;
+}
+
+.notebookEntry small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+#notebookEditor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 10px;
+    gap: 8px;
+}
+
+#notebookTitle {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 2px inset #808080;
+    border-radius: 0;
+    background: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#notebookText {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    resize: none;
+    padding: 10px;
+    border: 2px inset #808080;
+    border-radius: 0;
+    background: white;
+    color: black;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#notebookSaveStatus {
+    margin: 0;
+    color: #444;
+    font-size: 11px;
+}
+
+
+/* ---- FurgenOS Desktop Icon Sidebar ---- */
+
+#icons {
+    position: fixed;
+    top: 145px;
+    left: 12px;
+
+    width: 85px;
+    height: calc(100vh - 160px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    overflow-y: auto;
+    overflow-x: visible;
+    z-index: 100;
+}
+
+/* Standardise every icon container */
+#icons > div {
+    position: relative !important;
+
+    box-sizing: border-box;
+    width: 75px !important;
+    height: 85px !important;
+    min-width: 75px !important;
+    flex: 0 0 85px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Standardise the actual icon backgrounds */
+#icons > div > div {
+    position: static !important;
+    box-sizing: border-box;
+
+    width: 66px !important;
+    height: 66px !important;
+    min-height: 66px;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Keep icon images properly sized */
+#icons > div img {
+    max-width: 55px;
+    max-height: 55px;
+    object-fit: contain;
+}
+
+/* Hide names */
+#icons > div > p {
+    display: none !important;
+
+    position: absolute;
+    left: 80px;
+    top: 20px;
+
+    margin: 0 !important;
+    padding: 7px 12px;
+
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: 1px solid #8dbce3;
+    border-radius: 4px;
+
+    white-space: nowrap;
+    z-index: 500;
+}
+
+/* Reveal names on hover */
+#icons > div:hover > p {
+    display: block !important;
+}
+
+/* Hover effect */
+#icons > div:hover > div {
+    filter: brightness(1.2);
+}
+
+/* Make the sidebar scroll when necessary */
+#icons::-webkit-scrollbar {
+    width: 4px;
+}
+
+#icons::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+}
+
+/* ---- Current Application Label ---- */
+
+#currentAppLabel {
+    position: absolute;
+    left: 180px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin: 0;
+    padding: 8px 14px;
+
+    color: white;
+    font-size: 16px;
+    font-family: Optima, sans-serif;
+
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+
+    transition: background 0.2s;
+}

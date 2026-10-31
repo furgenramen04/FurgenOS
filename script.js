@@ -85,14 +85,18 @@ var welcomeScreen = document.querySelector("#welcome");
 
 function closeWindow(element) {
   element.style.display = "none";
+  updateCurrentAppLabel();
 }
 
+var manualScreenOpen = document.querySelector("#manualopen");
 
 var welcomeScreenClose = document.querySelector("#welcomeclose");
 
 var welcomeScreenOpen = document.querySelector("#welcomeopen");
 
-
+manualScreenOpen.addEventListener("click", function() {
+    openWindow(welcomeScreen);
+})
 
 welcomeScreenClose.addEventListener("click", function() {
   closeWindow(welcomeScreen);
@@ -162,6 +166,7 @@ function openWindow(element) {
   biggestIndex++;
   element.style.zIndex = biggestIndex;
   topBar.style.zIndex = biggestIndex + 1;
+  updateCurrentAppLabel();
 }
 
 function initializeWindow(elementName) {
@@ -872,11 +877,11 @@ snakeBestDisplay.textContent = snakeBest;
 function drawSnakeGame() {
     const size = snakeGrid;
 
-    snakeCtx.fillStyle = "#071510";
+    snakeCtx.fillStyle = "#ffffff";
     snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
 
     // Grid
-    snakeCtx.strokeStyle = "rgba(120,219,169,0.07)";
+    snakeCtx.strokeStyle = "rgba(199, 205, 202, 0.93)";
     snakeCtx.lineWidth = 1;
 
     for (let i = 0; i <= snakeCanvas.width; i += size) {
@@ -892,7 +897,7 @@ function drawSnakeGame() {
     }
 
     // Food
-        snakeCtx.fillStyle = "#ff647c";
+        snakeCtx.fillStyle = "#ff0026";
         snakeCtx.fillRect(
               snakeFood.x * snakeGrid + 2,
               snakeFood.y * snakeGrid + 2,
@@ -900,9 +905,10 @@ function drawSnakeGame() {
               snakeGrid - 4
 );
 
+   
     // Snake
     snake.forEach((part, index) => {
-        snakeCtx.fillStyle = index === 0 ? "#b8ffcf" : "#48b77b";
+        snakeCtx.fillStyle = index === 0 ? "#000000" : "#000000";
         snakeCtx.fillRect(
             part.x * size + 1,
             part.y * size + 1,
@@ -911,21 +917,48 @@ function drawSnakeGame() {
         );
 
         if (index === 0) {
-            snakeCtx.fillStyle = "#071510";
-            snakeCtx.fillRect(
-                part.x * size + 5,
-                part.y * size + 5,
-                3,
-                3
+            const headX = part.x * size + size / 2;
+            const headY = part.y * size + size / 2;
+            const foodX = snakeFood.x * size + size / 2;
+            const foodY = snakeFood.y * size + size / 2;
+
+            // Tongue pointing towards the food
+            const dx = foodX - headX;
+            const dy = foodY - headY;
+            const distance = Math.hypot(dx, dy) || 1;
+            const tongueLength = 12;
+
+            const endX = headX + (dx / distance) * tongueLength;
+            const endY = headY + (dy / distance) * tongueLength;
+
+            snakeCtx.strokeStyle = "#df0021";
+            snakeCtx.lineWidth = 3;
+            snakeCtx.lineCap = "round";
+            snakeCtx.beginPath();
+            snakeCtx.moveTo(headX, headY);
+            snakeCtx.lineTo(endX, endY);
+            snakeCtx.stroke();
+
+            // Forked tongue tip
+            const angle = Math.atan2(dy, dx);
+            const forkLength = 5;
+            const forkAngle = 1.89;
+
+            snakeCtx.beginPath();
+            snakeCtx.moveTo(endX, endY);
+            snakeCtx.lineTo(
+                endX - Math.cos(angle - forkAngle) * forkLength,
+                endY - Math.sin(angle - forkAngle) * forkLength
             );
-            snakeCtx.fillRect(
-                part.x * size + 12,
-                part.y * size + 5,
-                3,
-                3
+            snakeCtx.moveTo(endX, endY);
+            snakeCtx.lineTo(
+                endX - Math.cos(angle + forkAngle) * forkLength,
+                endY - Math.sin(angle + forkAngle) * forkLength
             );
+            snakeCtx.stroke();
         }
     });
+
 }
 
 function placeSnakeFood() {
@@ -1081,3 +1114,757 @@ document.addEventListener("keydown", event => {
 snake = [{ x: 10, y: 10 }];
 snakeFood = { x: 15, y: 10 };
 drawSnakeGame();
+
+
+const visitorBook = document.getElementById("visitorBook");
+const visitorBookOpen = document.getElementById("visitorbookopen");
+const visitorBookClose = document.getElementById("visitorBookclose");
+const visitorBookForm = document.getElementById("visitorBookForm");
+const visitorName = document.getElementById("visitorName");
+const visitorMessage = document.getElementById("visitorMessage");
+const visitorBookEntries = document.getElementById("visitorBookEntries");
+const visitorBookStatus = document.getElementById("visitorBookStatus");
+
+const visitorStorageKey = "furgenOSVisitorBook";
+
+let visitorEntries = [];
+
+try {
+  const savedEntries = JSON.parse(
+    localStorage.getItem(visitorStorageKey) || "[]"
+  );
+
+  if (Array.isArray(savedEntries)) {
+    visitorEntries = savedEntries.filter(entry =>
+      entry &&
+      typeof entry.name === "string" &&
+      typeof entry.message === "string" &&
+      typeof entry.date === "string"
+    ).slice(0, 100);
+  }
+} catch (error) {
+  visitorEntries = [];
+}
+
+visitorBookOpen.addEventListener("click", () => {
+  openWindow(visitorBook);
+  renderVisitorEntries();
+});
+
+visitorBookClose.addEventListener("click", () => {
+  closeWindow(visitorBook);
+});
+
+function renderVisitorEntries() {
+  visitorBookEntries.replaceChildren();
+
+  if (visitorEntries.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.textContent = "No visitors yet. Be the first to sign!";
+    emptyMessage.style.color = "#b8cbd0";
+    visitorBookEntries.appendChild(emptyMessage);
+    return;
+  }
+
+  visitorEntries.forEach(entry => {
+    const card = document.createElement("div");
+    card.className = "visitor-entry";
+
+    const name = document.createElement("strong");
+    name.textContent = entry.name;
+
+    const date = document.createElement("small");
+    const parsedDate = new Date(entry.date);
+
+    date.textContent = Number.isNaN(parsedDate.getTime())
+      ? ""
+      : parsedDate.toLocaleString();
+
+    const message = document.createElement("p");
+    message.textContent = entry.message;
+
+    card.append(name, date, message);
+    visitorBookEntries.appendChild(card);
+  });
+}
+
+visitorBookForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = visitorName.value.trim();
+  const message = visitorMessage.value.trim();
+
+  if (!name || !message) {
+    visitorBookStatus.textContent = "Please enter your name and message.";
+    return;
+  }
+
+  visitorEntries.unshift({
+    name: name.slice(0, 32),
+    message: message.slice(0, 300),
+    date: new Date().toISOString()
+  });
+
+  visitorEntries = visitorEntries.slice(0, 100);
+
+  try {
+    localStorage.setItem(
+      visitorStorageKey,
+      JSON.stringify(visitorEntries)
+    );
+
+    visitorBookStatus.textContent = "Message added to the visitor's book!";
+  } catch (error) {
+    visitorBookStatus.textContent =
+      "Message added temporarily, but could not be saved.";
+  }
+
+  visitorBookForm.reset();
+  renderVisitorEntries();
+});
+
+renderVisitorEntries();
+
+addWindowTapHandling(visitorBook);
+dragElement(visitorBook);
+
+
+/* ---- FurgenOS Calendar ---- */
+
+const calendarWindow = document.getElementById("calendarWindow");
+const calendarOpen = document.getElementById("calendaropen");
+const calendarClose = document.getElementById("calendarClose");
+
+const calendarMonth = document.getElementById("calendarMonth");
+const calendarYear = document.getElementById("calendarYear");
+const calendarDays = document.getElementById("calendarDays");
+
+const calendarSelectedDate = document.getElementById("calendarSelectedDate");
+const calendarEvent = document.getElementById("calendarEvent");
+
+const calendarMonths = [
+    "January", "February", "March", "April",
+    "May", "June", "July", "August",
+    "September", "October", "November", "December"
+];
+
+// Populate month selector
+calendarMonths.forEach((month, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = month;
+    calendarMonth.appendChild(option);
+});
+
+// Populate year selector
+for (let year = 1999; year <= 2027; year++) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    calendarYear.appendChild(option);
+}
+
+// Start at the current month and year
+const today = new Date();
+
+let displayedMonth = today.getMonth();
+let displayedYear = Math.min(2027, Math.max(1999, today.getFullYear()));
+let selectedDay = null;
+
+function renderCalendar() {
+    calendarMonth.value = displayedMonth;
+    calendarYear.value = displayedYear;
+
+    calendarDays.replaceChildren();
+
+    const firstDay = new Date(
+        displayedYear,
+        displayedMonth,
+        1
+    ).getDay();
+
+    const daysInMonth = new Date(
+        displayedYear,
+        displayedMonth + 1,
+        0
+    ).getDate();
+
+    // Empty spaces before the first day
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("button");
+        empty.disabled = true;
+        calendarDays.appendChild(empty);
+    }
+
+    // Create the days
+    for (let day = 1; day <= daysInMonth; day++) {
+        const button = document.createElement("button");
+
+        button.textContent = day;
+
+        const hasEvent =
+            displayedMonth === 8 &&
+            day === 17 &&
+            displayedYear >= 2011;
+
+        const dateKey = getCalendarDateKey(
+    displayedYear,
+    displayedMonth,
+    day
+);
+
+const hasUserEvent = userCalendarEvents[dateKey]?.length > 0;
+
+if (hasEvent || hasUserEvent) {
+    button.classList.add("calendar-event");
+
+    const dot = document.createElement("span");
+    dot.className = "calendar-event-dot";
+    button.appendChild(dot);
+}
+
+        if (selectedDay === day) {
+            button.classList.add("calendar-selected");
+        }
+
+        button.addEventListener("click", () => {
+    selectedDay = day;
+    renderCalendar();
+    showCalendarDate(day);
+
+    if (hasEvent) {
+        startRetroVirusSimulation();
+    }
+});
+
+        calendarDays.appendChild(button);
+    }
+
+    if (selectedDay !== null) {
+        showCalendarDate(selectedDay);
+    }
+}
+
+function showCalendarDate(day) {
+    const date = new Date(displayedYear, displayedMonth, day);
+
+    calendarSelectedDate.textContent = date.toLocaleDateString("en-AU", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    if (displayedMonth === 8 && day === 17 && displayedYear >= 2011) {
+        calendarEvent.textContent = "Mysterious occurence";
+    } else {
+        calendarEvent.textContent = "";
+    }
+
+    calendarUserEvents.replaceChildren();
+
+    const dateKey = getCalendarDateKey(
+        displayedYear,
+        displayedMonth,
+        day
+    );
+
+    const events = userCalendarEvents[dateKey] || [];
+
+    events.forEach(eventName => {
+        const event = document.createElement("div");
+        event.className = "calendar-user-event";
+        event.textContent = eventName;
+        calendarUserEvents.appendChild(event);
+    });
+}
+
+// Month navigation
+document.getElementById("calendarPrev").addEventListener("click", () => {
+    displayedMonth--;
+
+    if (displayedMonth < 0) {
+        displayedMonth = 11;
+        displayedYear--;
+    }
+
+    if (displayedYear < 1999) {
+        displayedYear = 1999;
+        displayedMonth = 0;
+    }
+
+    selectedDay = null;
+    renderCalendar();
+    calendarSelectedDate.textContent = "Select a date";
+    calendarEvent.textContent = "No date selected.";
+});
+
+document.getElementById("calendarNext").addEventListener("click", () => {
+    displayedMonth++;
+
+    if (displayedMonth > 11) {
+        displayedMonth = 0;
+        displayedYear++;
+    }
+
+    if (displayedYear > 2027) {
+        displayedYear = 2027;
+        displayedMonth = 11;
+    }
+
+    selectedDay = null;
+    renderCalendar();
+    calendarSelectedDate.textContent = "Select a date";
+    calendarEvent.textContent = "No date selected.";
+});
+
+// Direct month and year selection
+calendarMonth.addEventListener("change", () => {
+    displayedMonth = Number(calendarMonth.value);
+    selectedDay = null;
+    renderCalendar();
+    calendarSelectedDate.textContent = "Select a date";
+    calendarEvent.textContent = "No date selected.";
+});
+
+calendarYear.addEventListener("change", () => {
+    displayedYear = Number(calendarYear.value);
+    selectedDay = null;
+    renderCalendar();
+    calendarSelectedDate.textContent = "Select a date";
+    calendarEvent.textContent = "No date selected.";
+});
+
+// Open and close calendar
+calendarOpen.addEventListener("click", () => {
+    openWindow(calendarWindow);
+});
+
+calendarClose.addEventListener("click", () => {
+    closeWindow(calendarWindow);
+});
+
+// Make calendar draggable and bring it to the front
+addWindowTapHandling(calendarWindow);
+dragElement(calendarWindow);
+
+/* ---- User Calendar Events ---- */
+
+let userCalendarEvents = JSON.parse(
+    localStorage.getItem("furgenCalendarEvents") || "{}"
+);
+
+const calendarUserEvents = document.getElementById("calendarUserEvents");
+const calendarNewEvent = document.getElementById("calendarNewEvent");
+const calendarAddButton = document.getElementById("calendarAddButton");
+
+function getCalendarDateKey(year, month, day) {
+    return `${year}-${month + 1}-${day}`;
+}
+
+calendarAddButton.addEventListener("click", () => {
+    const eventName = calendarNewEvent.value.trim();
+
+    if (!eventName) return;
+
+    if (selectedDay === null) {
+        alert("Please select a date first.");
+        return;
+    }
+
+    const dateKey = getCalendarDateKey(
+        displayedYear,
+        displayedMonth,
+        selectedDay
+    );
+
+    if (!userCalendarEvents[dateKey]) {
+        userCalendarEvents[dateKey] = [];
+    }
+
+    userCalendarEvents[dateKey].push(eventName);
+
+    localStorage.setItem(
+        "furgenCalendarEvents",
+        JSON.stringify(userCalendarEvents)
+    );
+
+    calendarNewEvent.value = "";
+
+    renderCalendar();
+    showCalendarDate(selectedDay);
+});
+
+renderCalendar();
+
+/* ---- Retro Virus Simulation ---- */
+
+const virusScreen = document.getElementById("virusScreen");
+const virusProgressBar = document.getElementById("virusProgressBar");
+const virusPercent = document.getElementById("virusPercent");
+const virusStatus = document.getElementById("virusStatus");
+const virusClose = document.getElementById("virusClose");
+
+let virusInterval;
+
+function startRetroVirusSimulation() {
+    virusScreen.style.display = "flex";
+    virusProgressBar.style.width = "0%";
+    virusPercent.textContent = "0%";
+    virusStatus.textContent = "Analysing system...";
+    virusClose.style.display = "none";
+
+    let progress = 0;
+
+    const messages = [
+        "Analysing system...",
+        "Unknown process detected...",
+        "Scanning memory...",
+        "Locating mysterious occurrence...",
+        "WARNING: SYSTEM COMPROMISED",
+        "Attempting recovery...",
+        "Sold liver on dark web"
+    ];
+
+    clearInterval(virusInterval);
+
+    virusInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 5) + 1;
+
+        if (progress >= 100) progress = 100;
+
+        virusProgressBar.style.width = progress + "%";
+        virusPercent.textContent = progress + "%";
+
+        const messageIndex = Math.min(
+            Math.floor(progress / 15),
+            messages.length - 1
+        );
+
+        virusStatus.textContent = messages[messageIndex];
+
+        if (progress >= 100) {
+            clearInterval(virusInterval);
+            virusStatus.textContent = "CRISIS AVERTED (for now)";
+            virusClose.style.display = "inline-block";
+        }
+    }, 250);
+}
+
+virusClose.addEventListener("click", () => {
+    clearInterval(virusInterval);
+    virusScreen.style.display = "none";
+});
+
+/* ---- FurgenOS Calculator ---- */
+
+const calculatorWindow = document.getElementById("calculatorWindow");
+const calculatorOpen = document.getElementById("calculatoropen");
+const calculatorClose = document.getElementById("calculatorClose");
+const calculatorDisplay = document.getElementById("calculatorDisplay");
+
+let calculatorCurrent = "0";
+let calculatorPrevious = null;
+let calculatorOperator = null;
+let calculatorReset = false;
+
+function updateCalculator() {
+    calculatorDisplay.value = calculatorCurrent;
+}
+
+function calculatorInputNumber(number) {
+    if (calculatorReset || calculatorCurrent === "0") {
+        calculatorCurrent = number;
+        calculatorReset = false;
+    } else {
+        calculatorCurrent += number;
+    }
+
+    updateCalculator();
+}
+
+function calculatorCalculate() {
+    if (calculatorPrevious === null || calculatorOperator === null) return;
+
+    const a = Number(calculatorPrevious);
+    const b = Number(calculatorCurrent);
+    let result;
+
+    switch (calculatorOperator) {
+        case "+":
+            result = a + b;
+            break;
+        case "-":
+            result = a - b;
+            break;
+        case "*":
+            result = a * b;
+            break;
+        case "/":
+            result = b === 0 ? "Error" : a / b;
+            break;
+    }
+
+    calculatorCurrent = result === "Error"
+        ? "Error"
+        : String(Number(result.toPrecision(12)));
+
+    calculatorPrevious = null;
+    calculatorOperator = null;
+    calculatorReset = true;
+
+    updateCalculator();
+}
+
+document.querySelectorAll("#calculatorButtons button").forEach(button => {
+    button.addEventListener("click", () => {
+        const number = button.dataset.number;
+        const operator = button.dataset.operator;
+        const action = button.dataset.action;
+
+        if (number !== undefined) {
+            calculatorInputNumber(number);
+        }
+
+        if (operator) {
+            if (calculatorOperator && !calculatorReset) {
+                calculatorCalculate();
+            }
+
+            calculatorPrevious = calculatorCurrent;
+            calculatorOperator = operator;
+            calculatorReset = true;
+        }
+
+        if (action === "clear") {
+            calculatorCurrent = "0";
+            calculatorPrevious = null;
+            calculatorOperator = null;
+            calculatorReset = false;
+        }
+
+        if (action === "backspace") {
+            calculatorCurrent = calculatorCurrent.length > 1
+                ? calculatorCurrent.slice(0, -1)
+                : "0";
+        }
+
+        if (action === "decimal" && !calculatorCurrent.includes(".")) {
+            calculatorCurrent += ".";
+        }
+
+        if (action === "sign" && calculatorCurrent !== "0") {
+            calculatorCurrent = String(-Number(calculatorCurrent));
+        }
+
+        if (action === "percent") {
+            calculatorCurrent = String(Number(calculatorCurrent) / 100);
+        }
+
+        if (action === "equals") {
+            calculatorCalculate();
+        }
+
+        updateCalculator();
+    });
+});
+
+calculatorOpen.addEventListener("click", () => openWindow(calculatorWindow));
+calculatorClose.addEventListener("click", () => closeWindow(calculatorWindow));
+
+addWindowTapHandling(calculatorWindow);
+dragElement(calculatorWindow); 
+
+/* ---- FurgenOS Notebook ---- */
+
+const notebookWindow = document.getElementById("notebookWindow");
+const notebookOpen = document.getElementById("notebookopen");
+const notebookClose = document.getElementById("notebookClose");
+
+const notebookList = document.getElementById("notebookList");
+const notebookTitle = document.getElementById("notebookTitle");
+const notebookText = document.getElementById("notebookText");
+const notebookSaveStatus = document.getElementById("notebookSaveStatus");
+
+const notebookNew = document.getElementById("notebookNew");
+const notebookDelete = document.getElementById("notebookDelete");
+
+const NOTEBOOK_STORAGE_KEY = "furgenos_notebook_notes";
+
+let notebookNotes = JSON.parse(
+    localStorage.getItem(NOTEBOOK_STORAGE_KEY) || "[]"
+);
+
+let activeNotebookNote = null;
+
+function saveNotebook() {
+    localStorage.setItem(
+        NOTEBOOK_STORAGE_KEY,
+        JSON.stringify(notebookNotes)
+    );
+
+    notebookSaveStatus.textContent = "All changes saved locally.";
+}
+
+function renderNotebookList() {
+    notebookList.replaceChildren();
+
+    notebookNotes.forEach(note => {
+        const entry = document.createElement("div");
+        entry.className = "notebookEntry";
+
+        if (note.id === activeNotebookNote) {
+            entry.classList.add("selected");
+        }
+
+        const title = document.createElement("strong");
+        title.textContent = note.title || "Untitled";
+
+        const date = document.createElement("small");
+        date.textContent = new Date(note.updated).toLocaleDateString();
+
+        entry.append(title, date);
+
+        entry.addEventListener("click", () => {
+            selectNotebookNote(note.id);
+        });
+
+        notebookList.appendChild(entry);
+    });
+}
+
+function selectNotebookNote(id) {
+    activeNotebookNote = id;
+
+    const note = notebookNotes.find(note => note.id === id);
+
+    if (!note) return;
+
+    notebookTitle.value = note.title;
+    notebookText.value = note.text;
+
+    renderNotebookList();
+}
+
+function createNotebookNote() {
+    const note = {
+        id: Date.now().toString() + Math.random().toString(36).slice(2),
+        title: "Untitled",
+        text: "",
+        updated: new Date().toISOString()
+    };
+
+    notebookNotes.unshift(note);
+
+    saveNotebook();
+    selectNotebookNote(note.id);
+}
+
+function updateNotebookNote() {
+    const note = notebookNotes.find(
+        note => note.id === activeNotebookNote
+    );
+
+    if (!note) return;
+
+    note.title = notebookTitle.value;
+    note.text = notebookText.value;
+    note.updated = new Date().toISOString();
+
+    saveNotebook();
+    renderNotebookList();
+}
+
+notebookNew.addEventListener("click", createNotebookNote);
+
+notebookDelete.addEventListener("click", () => {
+    if (!activeNotebookNote) return;
+
+    notebookNotes = notebookNotes.filter(
+        note => note.id !== activeNotebookNote
+    );
+
+    activeNotebookNote = null;
+
+    saveNotebook();
+
+    notebookTitle.value = "";
+    notebookText.value = "";
+
+    renderNotebookList();
+});
+
+notebookTitle.addEventListener("input", updateNotebookNote);
+notebookText.addEventListener("input", updateNotebookNote);
+
+notebookOpen.addEventListener("click", () => {
+    openWindow(notebookWindow);
+});
+
+notebookClose.addEventListener("click", () => {
+    closeWindow(notebookWindow);
+});
+
+addWindowTapHandling(notebookWindow);
+dragElement(notebookWindow);
+
+renderNotebookList();
+
+/* ---- Lexus LFA Easter Egg ---- */
+
+const lfaImage = document.querySelector('#lfaimg');
+const lfaSound = document.getElementById("lfasound");
+
+lfaImage.style.cursor = "pointer";
+
+lfaImage.addEventListener("click", () => {
+    lfaSound.currentTime = 0;
+    lfaSound.play();
+});
+
+/* ---- Current Application Label ---- */
+
+const currentAppLabel = document.getElementById("currentAppLabel");
+
+const appNames = {
+    todo: "Ronaldo Quotes",
+    welcome: "Welcome",
+    pongWindow: "FootPong",
+    snakeWindow: "BlindSnek",
+    visitorBook: "Traveller's Log",
+    calendarWindow: "Calendar",
+    calculatorWindow: "Calculator",
+    notebookWindow: "Thoughtbook"
+};
+
+function updateCurrentAppLabel() {
+    const openWindows = [...document.querySelectorAll(".window")]
+        .filter(window => window.style.display !== "none");
+
+    if (openWindows.length === 0) {
+        currentAppLabel.textContent = "Desktop";
+        return;
+    }
+
+    openWindows.sort((a, b) =>
+        Number(b.style.zIndex || 0) - Number(a.style.zIndex || 0)
+    );
+
+    const activeWindow = openWindows[0];
+
+    currentAppLabel.textContent =
+        appNames[activeWindow.id] || "Application";
+}
+
+/* ---- Track Active Application ---- */
+
+document.addEventListener("click", event => {
+    const clickedWindow = event.target.closest(".window");
+
+    if (!clickedWindow) return;
+
+    if (clickedWindow.style.display === "none") return;
+
+    currentAppLabel.textContent =
+        appNames[clickedWindow.id] || "Application";
+});
