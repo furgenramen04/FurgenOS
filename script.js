@@ -1,4 +1,9 @@
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
+const supabase = createClient(
+    "https://yospbrlojsggcqmdturc.supabase.co",
+    "sb_publishable_UJEj7aHqBK6ZZrzvdvKCKA_IlY0pZw-"
+);
 
 var randomSites = ['https://theuselessweb.com/',
   'https://neal.fun/',
@@ -1116,6 +1121,8 @@ snakeFood = { x: 15, y: 10 };
 drawSnakeGame();
 
 
+/* ---- FurgenOS Shared Visitor's Book ---- */
+
 const visitorBook = document.getElementById("visitorBook");
 const visitorBookOpen = document.getElementById("visitorbookopen");
 const visitorBookClose = document.getElementById("visitorBookclose");
@@ -1125,103 +1132,119 @@ const visitorMessage = document.getElementById("visitorMessage");
 const visitorBookEntries = document.getElementById("visitorBookEntries");
 const visitorBookStatus = document.getElementById("visitorBookStatus");
 
-const visitorStorageKey = "furgenOSVisitorBook";
-
 let visitorEntries = [];
 
-try {
-  const savedEntries = JSON.parse(
-    localStorage.getItem(visitorStorageKey) || "[]"
-  );
-
-  if (Array.isArray(savedEntries)) {
-    visitorEntries = savedEntries.filter(entry =>
-      entry &&
-      typeof entry.name === "string" &&
-      typeof entry.message === "string" &&
-      typeof entry.date === "string"
-    ).slice(0, 100);
-  }
-} catch (error) {
-  visitorEntries = [];
-}
-
 visitorBookOpen.addEventListener("click", () => {
-  openWindow(visitorBook);
-  renderVisitorEntries();
+    openWindow(visitorBook);
+    loadVisitorEntries();
 });
 
 visitorBookClose.addEventListener("click", () => {
-  closeWindow(visitorBook);
+    closeWindow(visitorBook);
 });
 
-function renderVisitorEntries() {
-  visitorBookEntries.replaceChildren();
+async function loadVisitorEntries() {
+    visitorBookStatus.textContent = "Loading messages...";
 
-  if (visitorEntries.length === 0) {
-    const emptyMessage = document.createElement("p");
-    emptyMessage.textContent = "No visitors yet. Be the first to sign!";
-    emptyMessage.style.color = "#b8cbd0";
-    visitorBookEntries.appendChild(emptyMessage);
-    return;
-  }
+    const { data, error } = await supabase
+        .from("visitor_entries")
+        .select("name, message, created_at")
+        .order("created_at", { ascending: false })
+        .limit(100);
 
-  visitorEntries.forEach(entry => {
-    const card = document.createElement("div");
-    card.className = "visitor-entry";
+    if (error) {
+        console.error("Visitor Book loading error:", error);
+        visitorBookStatus.textContent = "Could not load messages.";
+        return;
+    }
 
-    const name = document.createElement("strong");
-    name.textContent = entry.name;
+    visitorEntries = data.map(entry => ({
+        name: entry.name,
+        message: entry.message,
+        date: entry.created_at
+    }));
 
-    const date = document.createElement("small");
-    const parsedDate = new Date(entry.date);
-
-    date.textContent = Number.isNaN(parsedDate.getTime())
-      ? ""
-      : parsedDate.toLocaleString();
-
-    const message = document.createElement("p");
-    message.textContent = entry.message;
-
-    card.append(name, date, message);
-    visitorBookEntries.appendChild(card);
-  });
+    visitorBookStatus.textContent = "";
+    renderVisitorEntries();
 }
 
-visitorBookForm.addEventListener("submit", event => {
-  event.preventDefault();
+function renderVisitorEntries() {
+    visitorBookEntries.replaceChildren();
 
-  const name = visitorName.value.trim();
-  const message = visitorMessage.value.trim();
+    if (visitorEntries.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.textContent = "No visitors yet. Be the first to sign!";
+        emptyMessage.style.color = "#b8cbd0";
+        visitorBookEntries.appendChild(emptyMessage);
+        return;
+    }
 
-  if (!name || !message) {
-    visitorBookStatus.textContent = "Please enter your name and message.";
-    return;
-  }
+    visitorEntries.forEach(entry => {
+        const card = document.createElement("div");
+        card.className = "visitor-entry";
 
-  visitorEntries.unshift({
-    name: name.slice(0, 32),
-    message: message.slice(0, 300),
-    date: new Date().toISOString()
-  });
+        const name = document.createElement("strong");
+        name.textContent = entry.name;
 
-  visitorEntries = visitorEntries.slice(0, 100);
+        const date = document.createElement("small");
+        const parsedDate = new Date(entry.date);
 
-  try {
-    localStorage.setItem(
-      visitorStorageKey,
-      JSON.stringify(visitorEntries)
-    );
+        date.textContent = Number.isNaN(parsedDate.getTime())
+            ? ""
+            : parsedDate.toLocaleString();
 
+        const message = document.createElement("p");
+        message.textContent = entry.message;
+
+        card.append(name, date, message);
+        visitorBookEntries.appendChild(card);
+    });
+}
+
+visitorBookForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const name = visitorName.value.trim().slice(0, 32);
+    const message = visitorMessage.value.trim().slice(0, 300);
+
+    if (!name || !message) {
+        visitorBookStatus.textContent = "Please enter your name and message.";
+        return;
+    }
+
+    visitorBookStatus.textContent = "Submitting message...";
+
+    const { error } = await supabase
+        .from("visitor_entries")
+        .insert([{ name, message }]);
+
+    if (error) {
+        console.error("Visitor Book submission error:", error);
+        visitorBookStatus.textContent = "Could not submit your message.";
+        return;
+    }
+
+    visitorBookForm.reset();
     visitorBookStatus.textContent = "Message added to the visitor's book!";
-  } catch (error) {
-    visitorBookStatus.textContent =
-      "Message added temporarily, but could not be saved.";
-  }
 
-  visitorBookForm.reset();
-  renderVisitorEntries();
+    await loadVisitorEntries();
 });
+
+// Automatically update the book when someone else signs it
+supabase
+    .channel("visitor-book-changes")
+    .on(
+        "postgres_changes",
+        {
+            event: "INSERT",
+            schema: "public",
+            table: "visitor_entries"
+        },
+        () => {
+            loadVisitorEntries();
+        }
+    )
+    .subscribe();
 
 renderVisitorEntries();
 
