@@ -7,7 +7,7 @@
   </head>
 
 
-  <body style= "display:flex; width: 100%; height: 100vh; background-image: url(./sunset\ wallpaper.jpg);background-size: cover; font-family: Optima, sans-serif; background-color: #bfd8e0;">
+  <body style= "display:flex; align-items:flex-start; width: 100%; height: 100vh; background-image: url(./sunset\ wallpaper.jpg);background-size: cover; font-family: Optima, sans-serif; background-color: #bfd8e0;">
      
     <div id="bootScreen">
       <div id="bootContent">
@@ -28,6 +28,7 @@
     
     <div id="top" style = "border-radius:10px; position:absolute; width: 99.5%; display:flex; background-color: rgba(0, 0, 0, 0.4); color:#fff; justify-content: space-between;">
       <p id = "manualopen" style = "background-color: rgba(0, 0, 0, 0.4); color:gold; border-radius: 10px; padding: 5px; cursor: pointer;"> FurgenOS </p>
+      <p id="currentAppLabel">Welcome</p>
       <p id="welcomeopen" style = "cursor:pointer; border-radius:10px; padding: 5px; background-color: rgba(0, 0, 0, 0.4); color:#7fa291;">
         Messing Around 🫪
       </p>
@@ -39,20 +40,60 @@
       <input id="wallpaperinput" type="file" accept="image/*" style="display:none">
     </div>
 
+<div id="icons">
     <div id="pongopen" style="padding-top:64px; padding-left:10px; cursor:pointer; width:fit-content;">
       <div style="text-align:center; width:fit-content; border-radius:15px; border:solid 1px #8dbce3; background:rgba(10,20,35,0.8);">
-        <div style="width:50px; height:40px; display:flex; align-items:center; justify-content:center; color:#8dbce3; font-size:25px;">▥</div>
+         <img src="./premleague.jpeg" style="height:60px; width:60px;">
       </div>
-        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Pong</p>
+        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">FootPong</p>
     </div>
-    
-    <div id="todoopen" style="padding-top:64px; padding-left:10px">
+
+
+      <div id="calendaropen" style="cursor:pointer; padding-left:10px; padding-top:10px; width:fit-content;">
+         <div style="width:66px; height:56px; display:flex; align-items:center; justify-content:center; border:1px solid #777; background:#c0c0c0;">
+             <img src="./calendar.jpeg" style="height:40px; width:40px;">
+         </div>
+        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Calendar</p>
+      </div>
+   
+
+    <div id="snakeopen" style="cursor:pointer; padding-left: 10px; padding-top:64px; width:fit-content">
+      <div style="text-align:center; width:fit-content; border-radius: 15px; border:solid; border-color:#2994b8; background-color:#6BB5CF;">
+        <img src="./snek.jpg" style="object-fit:cover; height:50px; width:50px; padding-top:5px; border-radius:8px;";>
+      </div>
+      <p style="margin:5px; color:white; font-size:12px;text-align: center;">BlindSnek</p> 
+    </div>
+
+
+    <div id="visitorbookopen" style="cursor:pointer; padding-left:10px; padding-top:10px; width:fit-content;">
+       <div style="text-align:center; width:fit-content; border-radius:12px; border:1px solid #8bd8c7; background:rgba(15,35,45,0.9); padding:8px;">
+       <img src="./visitors book.jpeg" style="height:60px; width:50px;">
+    </div>
+    <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Traveller's log</p>
+    </div>
+
+    <div id="calculatoropen" style="cursor:pointer; padding-left:10px; padding-top:10px; width:fit-content;">
+    <div style="width:66px; height:56px; display:flex; align-items:center; justify-content:center; border:1px solid #777; background:#c0c0c0;">
+        <img src="./calculator.jpeg" style="height:40px; width:50px;">
+    </div>
+    <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Calculator</p>
+</div>
+
+   <div id="todoopen" style="padding-top:64px; padding-left:10px; cursor:pointer;">
       <div class="selected" style="text-align: center; width:fit-content; position:relative; top:40px; border-radius:15px; border:solid; border-color: #2994b8; background-color: #bfd8e0;">
        <img src="ronaldo signature.png" style="padding:5px; width:50px; height:40px; object-fit:cover;">
       </div>
     </div>
+
+    <div id="notebookopen" style="cursor:pointer; padding-left:10px; padding-top:10px; width:fit-content;">
+        <div style="width:66px; height:56px; display:flex; align-items:center; justify-content:center; border:1px solid #777; background:#c0c0c0;">
+            <img src="./githubnotebook.png" style="height:40px; width:50px;">
+        </div>
+        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Notebook</p>
+    </div>
+  </div>  
     
-    <div class="window" id="todo" style="display:none;top: 50%; left:50%; transform: translate(-50%,-50%) ">
+  <div class="window" id="todo" style="display:none;top: 50%; left:50%; transform: translate(-50%,-50%) ">
       <div class="header" id="todoheader" style="background-color: rgb(204, 86, 49);border-color:#eb570d; border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
         <h3 style="flex:1; display:flex; align-items:center; justify-content:center; margin:0; color:rgb(179, 4, 13);">Ronaldo Quotes</h3>
         <img class="closebutton" id="todoclose" src="./sick rim no background.png">
@@ -71,8 +112,9 @@
         <h3 style="flex:1; display:flex; align-items:center; justify-content:center; margin:0; color:rgb(44, 133, 228);">Welcome to FurgenOS</h3>
         <img class="closebutton" id="welcomeclose" src="./sick rim no background.png">
       </div>
-      <p style = "padding:10px; margin: 10px; color: #5e88d6">FurgenOS is a simple operating system. <br>It may be very limited and boring now, but in time<br> it will be (subjectively) the best OS on the internet.</p> <p style ="margin-left:10px; color:rgb(208, 92, 92)">Note: Once you close this window, you will need to reload the webpage to get it again. (I'm working on a solution)</p>
-      <img style = "padding:10px;border-radius:16px; object-fit:cover; width: 400px; height: 250px" src="./lexus lfa sydney.jpg" />
+      <p style = "padding:10px; margin: 10px; color: #5e88d6">FurgenOS is a simple operating system. <br>It may be very limited and boring now, but in time<br> it will be (subjectively) the best OS on the internet.</p> <p style ="margin-left:10px; color:rgb(208, 92, 92)">Note: Once you close this window, you can click the button "FurgenOS" (top-left) <br> to reopen it.</p>
+      <img id="lfaimg" style = "padding:10px;border-radius:16px; object-fit:cover; width: 400px; height: 250px" src="./lexus lfa sydney.jpg" />
+      <audio id="lfasound" src="./lfa_full_flight.mp3" preload="auto"></audio>
     </div>
 
     <div class="window" id="pongWindow"
@@ -80,15 +122,25 @@
 
   <div class="header" id="pongWindowheader"
        style="width:100%; box-sizing:border-box; background:rgba(30,45,65,0.95);">
-    <h3 style="flex:1; text-align:center; margin:0; color:#8dbce3;">FurgenOS Pong</h3>
+    <h3 style="flex:1; text-align:center; margin:0; color:#8dbce3;">FootPong</h3>
     <img class="closebutton" id="pongClose" src="./sick rim no background.png">
   </div>
 
+  
+<div style="margin-bottom:12px; color:white;">
+  <label for="pongMode">Game mode: </label>
+  <select id="pongMode" style="padding:6px; border-radius:6px; background:#1c3047; color:white; border:1px solid #8dbce3;">
+    <option value="single">Single Player</option>
+    <option value="two">Two Players</option>
+  </select>
+</div>
+
+  
   <div style="padding:15px; color:white; text-align:center;">
     <div style="display:flex; justify-content:space-around; margin-bottom:12px; font-size:18px;">
-      <span>YOU: <span id="pongPlayerScore">0</span></span>
-      <span id="pongStatus">Ready to play</span>
-      <span>CPU: <span id="pongCpuScore">0</span></span>
+      <span>Man United: <span id="pongPlayerScore">0</span></span>
+      <span id="pongStatus">Play Pong!</span>
+      <span>Chelsea: <span id="pongCpuScore">0</span></span>
     </div>
 
     <canvas id="pongCanvas"
@@ -97,7 +149,7 @@
     </canvas>
 
     <p style="font-size:12px; color:#aab7cb;">
-      W / S or ↑ / ↓ to move
+      WASD for Red, Arrow Keys for Blue
     </p>
 
     <button id="pongStart"
@@ -106,8 +158,255 @@
     </button>
   </div>
 </div>
+
+
+<div class="window" id="snakeWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:min(520px,95vw); background:rgba(10,20,25,0.96); border-color:#78dba9;">
+
+  <div class="header" id="snakeWindowheader"
+       style="width:100%; box-sizing:border-box; background:rgba(20,45,38,0.98);">
+    <h3 style="flex:1; text-align:center; margin:0; color:#78dba9;">BlindSnek</h3>
+    <img class="closebutton" id="snakeClose" src="./sick rim no background.png">
+  </div>
+
+  <div style="padding:15px; color:white; text-align:center;">
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+      <span>Score: <span id="snakeScore">0</span></span>
+      <span>Best: <span id="snakeBest">0</span></span>
+    </div>
+
+    <canvas id="snakeCanvas" width="400" height="400"
+      style="display:block; width:100%; max-width:400px; height:auto; margin:auto; background:#071510; border:1px solid #315b47; border-radius:5px;">
+    </canvas>
+
+    <p id="snakeStatus" style="color:#78dba9;">Press Start to play</p>
+
+    <button id="snakeStart"
+      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      Start Game
+    </button>
+
+    <button id="snakePause"
+      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      Pause
+    </button>
+
+    <p style="font-size:12px; color:#aab7cb;">
+      Arrow keys or WASD to move
+    </p>
+  </div>
+</div>
+
+
+<div class="window" id="visitorBook"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:min(520px,95vw); background:rgba(12,25,35,0.97); border-color:#8bd8c7; color:white;">
+
+  <div class="header" id="visitorBookheader"
+       style="background:rgba(30,65,70,0.98); width:100%; box-sizing:border-box;">
+
+    <h3 style="flex:1; text-align:center; margin:0; color:#8bd8c7;">
+      Traveller's Log
+    </h3>
+
+    <img class="closebutton" id="visitorBookclose"
+         src="./sick rim no background.png">
+  </div>
+
+  <div style="padding:18px;">
+
+    <p style="color:#000000; font-size:13px;">
+      Welcome to FurgenOS. Leave a message for future visitors!
+    </p>
+
+    <form id="visitorBookForm">
+      <label for="visitorName">Your name</label>
+      <input id="visitorName" maxlength="32" required
+             placeholder="Enter your name"
+             style="width:100%; padding:10px; margin:6px 0 14px; box-sizing:border-box;">
+
+      <label for="visitorMessage">Your message</label>
+      <textarea id="visitorMessage" maxlength="300" required
+                placeholder="Write something..."
+                style="width:100%; height:90px; padding:10px; margin:6px 0; box-sizing:border-box; resize:vertical;"></textarea>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span style="font-size:11px; color:#b8cbd0;">MAX 300 CHARACTERS</span>
+        <button type="submit">Sign the book</button>
+      </div>
+    </form>
+
+    <p id="visitorBookStatus" style="font-size:12px; color:#8bd8c7;" aria-live="polite"></p>
+
+    <hr style="border-color:#42565b;">
+
+    <h4>Recent visitors</h4>
+
+    <div id="visitorBookEntries"
+         style="max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+    </div>
+
+  </div>
+</div>
+
+
+<div class="window" id="calendarWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:min(620px,95vw);">
+
+    <div class="header" id="calendarWindowheader">
+        <h3 style="flex:1; margin:0; color:white; padding-left:5px;">
+            FurgenOS Calendar
+        </h3>
+        <img class="closebutton" id="calendarClose"
+             src="./sick rim no background.png">
+    </div>
+
+    <div id="calendarContent">
+
+        <div id="calendarControls">
+            <button id="calendarPrev">&lt;</button>
+
+            <select id="calendarMonth"></select>
+            <select id="calendarYear"></select>
+
+            <button id="calendarNext">&gt;</button>
+        </div>
+
+        <div id="calendarWeekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+
+        <div id="calendarDays"></div>
+
+       <div id="calendarDetails">
+    <h4 id="calendarSelectedDate">Select a date</h4>
+    <p id="calendarEvent">No date selected.</p>
+
+    <div id="calendarUserEvents"></div>
+
+    <div id="calendarAddEvent">
+        <input
+            type="text"
+            id="calendarNewEvent"
+            placeholder="Enter event name..."
+            maxlength="60"
+        >
+        <button id="calendarAddButton">Add Event</button>
+    </div>
+</div>
+
+    </div>
+</div>
+
+<div id="virusScreen">
+    <div id="virusWindow">
+        <div id="virusTitle">FURGENOS SECURITY WARNING</div>
+        <div id="virusContent">
+            <h1>⚠ SYSTEM INFECTED ⚠</h1>
+            <p>A mysterious occurrence has been detected.</p>
+            <p id="virusStatus">Analysing system...</p>
+
+            <div id="virusProgress">
+                <div id="virusProgressBar"></div>
+            </div>
+
+            <p id="virusPercent">0%</p>
+            <button id="virusClose">RETURN TO THE MATRIX</button>
+        </div>
+    </div>
+    <div id="virusGlitch"></div>
+</div>
+
+<div class="window" id="calculatorWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:280px;">
+
+    <div class="header" id="calculatorWindowheader">
+        <h3 style="flex:1; margin:0; color:white; padding-left:5px;">
+            Calculator
+        </h3>
+        <img class="closebutton" id="calculatorClose"
+             src="./sick rim no background.png">
+    </div>
+
+    <div id="calculatorContent">
+        <input id="calculatorDisplay" value="0" readonly>
+
+        <div id="calculatorButtons">
+            <button data-action="clear">C</button>
+            <button data-action="backspace">←</button>
+            <button data-action="percent">%</button>
+            <button data-operator="/">÷</button>
+
+            <button data-number="7">7</button>
+            <button data-number="8">8</button>
+            <button data-number="9">9</button>
+            <button data-operator="*">×</button>
+
+            <button data-number="4">4</button>
+            <button data-number="5">5</button>
+            <button data-number="6">6</button>
+            <button data-operator="-">−</button>
+
+            <button data-number="1">1</button>
+            <button data-number="2">2</button>
+            <button data-number="3">3</button>
+            <button data-operator="+">+</button>
+
+            <button data-action="sign">±</button>
+            <button data-number="0">0</button>
+            <button data-action="decimal">.</button>
+            <button data-action="equals" class="calculatorEquals">=</button>
+        </div>
+    </div>
+</div>
+
+<div class="window" id="notebookWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:min(750px,95vw); height:500px;">
+
+    <div class="header" id="notebookWindowheader">
+        <h3 style="flex:1; margin:0; color:white; padding-left:5px;">
+            FurgenOS Thoughtbook
+        </h3>
+        <img class="closebutton" id="notebookClose"
+             src="./sick rim no background.png">
+    </div>
+
+    <div id="notebookContent">
+
+        <div id="notebookSidebar">
+            <div id="notebookToolbar">
+                <button id="notebookNew">+ New</button>
+                <button id="notebookDelete">Delete</button>
+            </div>
+
+            <div id="notebookList"></div>
+        </div>
+
+        <div id="notebookEditor">
+            <input
+                id="notebookTitle"
+                type="text"
+                placeholder="Note title..."
+                maxlength="80"
+            >
+
+            <textarea
+                id="notebookText"
+                placeholder="Start typing your notes..."
+            ></textarea>
+
+            <p id="notebookSaveStatus">All changes saved locally.</p>
+        </div>
+
+    </div>
+</div>
     
     <script type="module" src="./script.js"></script>
      
   </body>
-</html> 
+</html>  
