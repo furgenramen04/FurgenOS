@@ -382,7 +382,7 @@ const bootTimer = setInterval(() => {
 }, 10);
 
 
-/* ---- FurgenOS Football Pong ---- */
+/* goofy ahh game */
 
 const pongWindow = document.getElementById("pongWindow");
 const pongOpen = document.getElementById("pongopen");
@@ -627,7 +627,7 @@ function resolvePlayerCollision() {
         const ny = distance === 0 ? 0 : dy / distance;
         const overlap = minDistance - distance;
 
-        // Push both players apart equally.
+        
         player.x -= nx * overlap / 2;
         player.y -= ny * overlap / 2;
         cpu.x += nx * overlap / 2;
@@ -659,7 +659,7 @@ function moveHumanPlayer(p, up, down, left, right) {
 }
 
 function moveCpu() {
-    // Do not chase the ball until it has been kicked.
+    
     if (!ballKicked) return;
 
     const dx = ball.x - cpu.x;
@@ -696,8 +696,7 @@ function collideBallWithPlayer(p) {
         nx = dx / distance;
         ny = dy / distance;
     } else {
-        // Ball is inside the player's rectangle.
-        // Find the nearest edge and push it out through that edge.
+        
         const distances = [
             { d: ball.x - left, nx: -1, ny: 0 },
             { d: right - ball.x, nx: 1, ny: 0 },
@@ -712,7 +711,7 @@ function collideBallWithPlayer(p) {
         distance = -distances[0].d;
     }
 
-    // Push the ball completely outside the player.
+   
     const penetration = ball.radius - distance;
     ball.x += nx * penetration;
     ball.y += ny * penetration;
@@ -728,7 +727,7 @@ function collideBallWithPlayer(p) {
         return;
     }
 
-    // Only change direction if the ball is moving into the player.
+    
     const velocityIntoPlayer = ball.vx * nx + ball.vy * ny;
 
     if (velocityIntoPlayer < 0) {
@@ -736,7 +735,7 @@ function collideBallWithPlayer(p) {
         ball.vy -= 2 * velocityIntoPlayer * ny;
     }
 
-    // Keep the ball at or below half its previous maximum speed.
+    // ball speed
     const speed = Math.hypot(ball.vx, ball.vy);
     const maxSpeed = 2.8;
 
@@ -757,7 +756,7 @@ function scoreGoal(scorer) {
         pongStatus.textContent = "BLUE SCORES!";
     }
 
-    // Reset both players and stop the ball for the next kick-off.
+
     resetFootballPlayers();
 
     if (playerScore >= 5 || cpuScore >= 5) {
@@ -776,14 +775,14 @@ function scoreGoal(scorer) {
 
 function updateFootballPong() {
     if (pongRunning && pongWindow.style.display !== "none") {
-        // Red player: WASD
+       
         moveHumanPlayer(
             player,
             "w", "s", "a", "d"
         );
 
         if (pongMode.value === "two") {
-            // Blue player: arrow keys
+            
             moveHumanPlayer(
                 cpu,
                 "arrowup", "arrowdown",
@@ -792,7 +791,7 @@ function updateFootballPong() {
 
             resolvePlayerCollision();
         } else {
-            // Single-player mode: computer controls blue.
+            
             moveCpu();
         }
 
@@ -800,7 +799,7 @@ function updateFootballPong() {
             ball.x += ball.vx;
             ball.y += ball.vy;
 
-            // Top and bottom touchlines
+            
             if (ball.y - ball.radius <= 12) {
                 ball.y = 12 + ball.radius;
                 ball.vy = Math.abs(ball.vy);
@@ -812,8 +811,7 @@ function updateFootballPong() {
             }
         }
 
-        // Check collisions even when the ball is stationary,
-        // so either player can kick off.
+       
         collideBallWithPlayer(player);
         collideBallWithPlayer(cpu);
 
@@ -851,7 +849,7 @@ function updateFootballPong() {
 updateFootballPong();
 
 
-/* ---- FurgenOS Snake ---- */
+/* snek*/
 
 const snakeWindow = document.getElementById("snakeWindow");
 const snakeOpen = document.getElementById("snakeopen");
@@ -885,7 +883,7 @@ function drawSnakeGame() {
     snakeCtx.fillStyle = "#ffffff";
     snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
 
-    // Grid
+    
     snakeCtx.strokeStyle = "rgba(199, 205, 202, 0.93)";
     snakeCtx.lineWidth = 1;
 
@@ -901,7 +899,7 @@ function drawSnakeGame() {
         snakeCtx.stroke();
     }
 
-    // Food
+    // the food
         snakeCtx.fillStyle = "#ff0026";
         snakeCtx.fillRect(
               snakeFood.x * snakeGrid + 2,
@@ -911,7 +909,7 @@ function drawSnakeGame() {
 );
 
    
-    // Snake
+    // the snake
     snake.forEach((part, index) => {
         snakeCtx.fillStyle = index === 0 ? "#000000" : "#000000";
         snakeCtx.fillRect(
@@ -927,7 +925,7 @@ function drawSnakeGame() {
             const foodX = snakeFood.x * size + size / 2;
             const foodY = snakeFood.y * size + size / 2;
 
-            // Tongue pointing towards the food
+           
             const dx = foodX - headX;
             const dy = foodY - headY;
             const distance = Math.hypot(dx, dy) || 1;
@@ -944,7 +942,7 @@ function drawSnakeGame() {
             snakeCtx.lineTo(endX, endY);
             snakeCtx.stroke();
 
-            // Forked tongue tip
+            
             const angle = Math.atan2(dy, dx);
             const forkLength = 5;
             const forkAngle = 1.89;
@@ -1016,7 +1014,7 @@ function updateSnakeGame() {
 
     const eating = head.x === snakeFood.x && head.y === snakeFood.y;
 
-    // Wall collision
+
     if (
         head.x < 0 || head.x >= snakeCells ||
         head.y < 0 || head.y >= snakeCells
@@ -1025,7 +1023,7 @@ function updateSnakeGame() {
         return;
     }
 
-    // Self collision. The tail can move away if not eating.
+    
     const bodyToCheck = eating ? snake : snake.slice(0, -1);
 
     if (bodyToCheck.some(part => part.x === head.x && part.y === head.y)) {
@@ -1106,7 +1104,7 @@ document.addEventListener("keydown", event => {
 
     event.preventDefault();
 
-    // Prevent reversing directly into the snake.
+   
     if (
         next.x === -snakeDirection.x &&
         next.y === -snakeDirection.y
@@ -1115,13 +1113,13 @@ document.addEventListener("keydown", event => {
     snakeNextDirection = next;
 });
 
-// Draw an initial game screen before the first round.
+
 snake = [{ x: 10, y: 10 }];
 snakeFood = { x: 15, y: 10 };
 drawSnakeGame();
 
 
-/* ---- FurgenOS Shared Visitor's Book ---- */
+/* logbook */
 
 const visitorBook = document.getElementById("visitorBook");
 const visitorBookOpen = document.getElementById("visitorbookopen");
@@ -1174,7 +1172,7 @@ function renderVisitorEntries() {
     if (visitorEntries.length === 0) {
         const emptyMessage = document.createElement("p");
         emptyMessage.textContent = "No visitors yet. Be the first to sign!";
-        emptyMessage.style.color = "#b8cbd0";
+        emptyMessage.style.color = "#000000";
         visitorBookEntries.appendChild(emptyMessage);
         return;
     }
@@ -1230,7 +1228,7 @@ visitorBookForm.addEventListener("submit", async event => {
     await loadVisitorEntries();
 });
 
-// Automatically update the book when someone else signs it
+// updating book
 supabase
     .channel("visitor-book-changes")
     .on(
@@ -1252,7 +1250,7 @@ addWindowTapHandling(visitorBook);
 dragElement(visitorBook);
 
 
-/* ---- FurgenOS Calendar ---- */
+/*calendar*/
 
 const calendarWindow = document.getElementById("calendarWindow");
 const calendarOpen = document.getElementById("calendaropen");
@@ -1271,7 +1269,7 @@ const calendarMonths = [
     "September", "October", "November", "December"
 ];
 
-// Populate month selector
+
 calendarMonths.forEach((month, index) => {
     const option = document.createElement("option");
     option.value = index;
@@ -1279,7 +1277,7 @@ calendarMonths.forEach((month, index) => {
     calendarMonth.appendChild(option);
 });
 
-// Populate year selector
+
 for (let year = 1999; year <= 2027; year++) {
     const option = document.createElement("option");
     option.value = year;
@@ -1287,7 +1285,7 @@ for (let year = 1999; year <= 2027; year++) {
     calendarYear.appendChild(option);
 }
 
-// Start at the current month and year
+
 const today = new Date();
 
 let displayedMonth = today.getMonth();
@@ -1312,14 +1310,14 @@ function renderCalendar() {
         0
     ).getDate();
 
-    // Empty spaces before the first day
+   
     for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement("button");
         empty.disabled = true;
         calendarDays.appendChild(empty);
     }
 
-    // Create the days
+
     for (let day = 1; day <= daysInMonth; day++) {
         const button = document.createElement("button");
 
@@ -1402,7 +1400,7 @@ function showCalendarDate(day) {
     });
 }
 
-// Month navigation
+
 document.getElementById("calendarPrev").addEventListener("click", () => {
     displayedMonth--;
 
@@ -1441,7 +1439,7 @@ document.getElementById("calendarNext").addEventListener("click", () => {
     calendarEvent.textContent = "No date selected.";
 });
 
-// Direct month and year selection
+
 calendarMonth.addEventListener("change", () => {
     displayedMonth = Number(calendarMonth.value);
     selectedDay = null;
@@ -1458,7 +1456,7 @@ calendarYear.addEventListener("change", () => {
     calendarEvent.textContent = "No date selected.";
 });
 
-// Open and close calendar
+
 calendarOpen.addEventListener("click", () => {
     openWindow(calendarWindow);
 });
@@ -1467,11 +1465,11 @@ calendarClose.addEventListener("click", () => {
     closeWindow(calendarWindow);
 });
 
-// Make calendar draggable and bring it to the front
+
 addWindowTapHandling(calendarWindow);
 dragElement(calendarWindow);
 
-/* ---- User Calendar Events ---- */
+/* calendarevents */
 
 let userCalendarEvents = JSON.parse(
     localStorage.getItem("furgenCalendarEvents") || "{}"
@@ -1520,7 +1518,7 @@ calendarAddButton.addEventListener("click", () => {
 
 renderCalendar();
 
-/* ---- Retro Virus Simulation ---- */
+/*virus 1 */
 
 const virusScreen = document.getElementById("virusScreen");
 const virusProgressBar = document.getElementById("virusProgressBar");
@@ -1579,7 +1577,7 @@ virusClose.addEventListener("click", () => {
     virusScreen.style.display = "none";
 });
 
-/* ---- FurgenOS Calculator ---- */
+/* calc */
 
 const calculatorWindow = document.getElementById("calculatorWindow");
 const calculatorOpen = document.getElementById("calculatoropen");
@@ -1698,7 +1696,7 @@ calculatorClose.addEventListener("click", () => closeWindow(calculatorWindow));
 addWindowTapHandling(calculatorWindow);
 dragElement(calculatorWindow); 
 
-/* ---- FurgenOS Notebook ---- */
+/* thoughtbook */
 
 const notebookWindow = document.getElementById("notebookWindow");
 const notebookOpen = document.getElementById("notebookopen");
@@ -1833,7 +1831,7 @@ dragElement(notebookWindow);
 
 renderNotebookList();
 
-/* ---- Lexus LFA Easter Egg ---- */
+/* vroom */
 
 const lfaImage = document.querySelector('#lfaimg');
 const lfaSound = document.getElementById("lfasound");
@@ -1845,7 +1843,7 @@ lfaImage.addEventListener("click", () => {
     lfaSound.play();
 });
 
-/* ---- Current Application Label ---- */
+/* current app label*/
 
 const currentAppLabel = document.getElementById("currentAppLabel");
 
@@ -1857,7 +1855,9 @@ const appNames = {
     visitorBook: "Traveller's Log",
     calendarWindow: "Calendar",
     calculatorWindow: "Calculator",
-    notebookWindow: "Thoughtbook"
+    notebookWindow: "Thoughtbook",
+    puzzleWindow: "Sliding Puzzle"
+
 };
 
 function updateCurrentAppLabel() {
@@ -1879,7 +1879,7 @@ function updateCurrentAppLabel() {
         appNames[activeWindow.id] || "Application";
 }
 
-/* ---- Track Active Application ---- */
+/* open app tracker*/
 
 document.addEventListener("click", event => {
     const clickedWindow = event.target.closest(".window");
@@ -1891,3 +1891,295 @@ document.addEventListener("click", event => {
     currentAppLabel.textContent =
         appNames[clickedWindow.id] || "Application";
 });
+
+
+setTimeout(() => {
+    mouseVirus.style.display = "flex";
+    mousePopup.style.display = "block";
+    mouseInfection.style.display = "none";
+}, 10000);
+
+/* virus 2  */
+
+const mouseVirus = document.getElementById("mouseVirus");
+const mousePopup = document.getElementById("mousePopup");
+const mouseInfection = document.getElementById("mouseInfection");
+
+const mouseClose = document.getElementById("mouseClose");
+const claimMice = document.getElementById("claimMice");
+const mouseReset = document.getElementById("mouseReset");
+
+const mouseProgressFill = document.getElementById("mouseProgressFill");
+const mouseStatus = document.getElementById("mouseStatus");
+const mouseSwarm = document.getElementById("mouseSwarm");
+
+let mouseTimer;
+
+mouseClose.addEventListener("click", () => {
+    mouseVirus.style.display = "none";
+});
+
+claimMice.addEventListener("click", () => {
+    mousePopup.style.display = "none";
+    mouseInfection.style.display = "block";
+
+    let progress = 0;
+
+    mouseTimer = setInterval(() => {
+        progress += 5;
+
+        mouseProgressFill.style.width = progress + "%";
+
+        mouseStatus.textContent =
+            "DELIVERING MOUSE... " + progress + "%";
+
+        mouseSwarm.textContent += " 🐁";
+
+        if (progress >= 100) {
+            clearInterval(mouseTimer);
+            mouseStatus.textContent = "MOUSE SUCCESSFULLY DELIVERED";
+            mouseSwarm.textContent += " 🐀🐁🐀🐁";
+        }
+
+    }, 150);
+});
+
+mouseReset.addEventListener("click", () => {
+    clearInterval(mouseTimer);
+
+    mouseVirus.style.display = "none";
+    mousePopup.style.display = "block";
+    mouseInfection.style.display = "none";
+
+    mouseProgressFill.style.width = "0%";
+    mouseSwarm.textContent = "";
+    mouseStatus.textContent = "DELIVERING 500 MICE...";
+});
+
+/* sliding puzzle */
+
+const puzzleWindow = document.getElementById("puzzleWindow");
+const puzzleOpen = document.getElementById("puzzleopen");
+const puzzleClose = document.getElementById("puzzleClose");
+
+const puzzleImageInput = document.getElementById("puzzleImageInput");
+const puzzleBoard = document.getElementById("puzzleBoard");
+const puzzleMovesDisplay = document.getElementById("puzzleMoves");
+const puzzleTimeDisplay = document.getElementById("puzzleTime");
+const puzzleShuffle = document.getElementById("puzzleShuffle");
+const puzzleReset = document.getElementById("puzzleReset");
+const puzzleStatus = document.getElementById("puzzleStatus");
+
+let puzzleTiles = Array.from({ length: 16 }, (_, i) => i);
+let puzzleImageURL = null;
+let puzzleMoves = 0;
+let puzzleSeconds = 0;
+let puzzleTimer = null;
+let puzzleStarted = false;
+
+puzzleOpen.addEventListener("click", () => {
+    openWindow(puzzleWindow);
+});
+
+puzzleClose.addEventListener("click", () => {
+    closeWindow(puzzleWindow);
+});
+
+addWindowTapHandling(puzzleWindow);
+dragElement(puzzleWindow);
+
+puzzleImageInput.addEventListener("change", () => {
+    const file = puzzleImageInput.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        puzzleStatus.textContent = "Please choose an image file.";
+        return;
+    }
+
+    const newURL = URL.createObjectURL(file);
+    const image = new Image();
+
+    image.onload = () => {
+        if (puzzleImageURL) {
+            URL.revokeObjectURL(puzzleImageURL);
+        }
+
+        puzzleImageURL = newURL;
+        puzzleTiles = Array.from({ length: 16 }, (_, i) => i);
+
+        puzzleShuffle.disabled = false;
+        puzzleReset.disabled = false;
+
+        stopPuzzleTimer();
+        puzzleMoves = 0;
+        puzzleSeconds = 0;
+        puzzleStarted = false;
+
+        updatePuzzleInfo();
+        renderPuzzle();
+        puzzleStatus.textContent = "Image loaded. Press Shuffle to play.";
+    };
+
+    image.onerror = () => {
+        URL.revokeObjectURL(newURL);
+        puzzleStatus.textContent = "Could not load that image.";
+    };
+
+    image.src = newURL;
+});
+
+function renderPuzzle() {
+    puzzleBoard.replaceChildren();
+
+    puzzleTiles.forEach((tile, position) => {
+        const button = document.createElement("button");
+        button.className = "puzzleTile";
+
+        if (tile === 15) {
+            button.disabled = true;
+        } else {
+            const originalRow = Math.floor(tile / 4);
+            const originalColumn = tile % 4;
+
+            button.style.setProperty(
+    "background-image",
+    `url("${puzzleImageURL}")`,
+    "important"
+);
+
+button.style.setProperty("background-size", "400% 400%", "important");
+
+button.style.setProperty(
+    "background-position",
+    `${originalColumn * 100 / 3}% ${originalRow * 100 / 3}%`,
+    "important"
+);
+            button.addEventListener("click", () => {
+                movePuzzleTile(position);
+            });
+        }
+
+        puzzleBoard.appendChild(button);
+    });
+}
+
+function movePuzzleTile(position) {
+    const emptyPosition = puzzleTiles.indexOf(15);
+
+    const row = Math.floor(position / 4);
+    const column = position % 4;
+
+    const emptyRow = Math.floor(emptyPosition / 4);
+    const emptyColumn = emptyPosition % 4;
+
+    const distance =
+        Math.abs(row - emptyRow) + Math.abs(column - emptyColumn);
+
+    if (distance !== 1) return;
+
+    [puzzleTiles[position], puzzleTiles[emptyPosition]] =
+        [puzzleTiles[emptyPosition], puzzleTiles[position]];
+
+    puzzleMoves++;
+
+    if (!puzzleStarted) {
+        puzzleStarted = true;
+        startPuzzleTimer();
+    }
+
+    updatePuzzleInfo();
+    renderPuzzle();
+
+    if (puzzleTiles.every((tile, index) => tile === index)) {
+        stopPuzzleTimer();
+        puzzleStatus.textContent = "Puzzle completed!";
+    }
+}
+
+function shufflePuzzle() {
+    if (!puzzleImageURL) return;
+
+    puzzleTiles = Array.from({ length: 16 }, (_, i) => i);
+
+    let previousEmptyPosition = -1;
+
+    for (let i = 0; i < 150; i++) {
+        const emptyPosition = puzzleTiles.indexOf(15);
+        const row = Math.floor(emptyPosition / 4);
+        const column = emptyPosition % 4;
+
+        const neighbours = [];
+
+        if (row > 0) neighbours.push(emptyPosition - 4);
+        if (row < 3) neighbours.push(emptyPosition + 4);
+        if (column > 0) neighbours.push(emptyPosition - 1);
+        if (column < 3) neighbours.push(emptyPosition + 1);
+
+        const possibleMoves = neighbours.filter(
+            position => position !== previousEmptyPosition
+        );
+
+        const nextPosition =
+            possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+        [puzzleTiles[emptyPosition], puzzleTiles[nextPosition]] =
+            [puzzleTiles[nextPosition], puzzleTiles[emptyPosition]];
+
+        previousEmptyPosition = emptyPosition;
+    }
+
+    puzzleMoves = 0;
+    puzzleSeconds = 0;
+    puzzleStarted = false;
+
+    stopPuzzleTimer();
+    updatePuzzleInfo();
+    renderPuzzle();
+
+    puzzleStatus.textContent = "Arrange the picture!";
+}
+
+function resetPuzzle() {
+    if (!puzzleImageURL) return;
+
+    stopPuzzleTimer();
+
+    puzzleTiles = Array.from({ length: 16 }, (_, i) => i);
+    puzzleMoves = 0;
+    puzzleSeconds = 0;
+    puzzleStarted = false;
+
+    updatePuzzleInfo();
+    renderPuzzle();
+
+    puzzleStatus.textContent = "Puzzle reset.";
+}
+
+function startPuzzleTimer() {
+    if (puzzleTimer) return;
+
+    puzzleTimer = setInterval(() => {
+        puzzleSeconds++;
+        updatePuzzleInfo();
+    }, 1000);
+}
+
+function stopPuzzleTimer() {
+    clearInterval(puzzleTimer);
+    puzzleTimer = null;
+}
+
+function updatePuzzleInfo() {
+    puzzleMovesDisplay.textContent = puzzleMoves;
+
+    const minutes = Math.floor(puzzleSeconds / 60);
+    const seconds = puzzleSeconds % 60;
+
+    puzzleTimeDisplay.textContent =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+puzzleShuffle.addEventListener("click", shufflePuzzle);
+puzzleReset.addEventListener("click", resetPuzzle);

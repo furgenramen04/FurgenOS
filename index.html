@@ -91,6 +91,13 @@
         </div>
         <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Notebook</p>
     </div>
+
+    <div id="puzzleopen" style="cursor:pointer; padding-left:10px; padding-top:10px; width:fit-content;">
+        <div style="width:66px; height:56px; display:flex; align-items:center; justify-content:center; border:1px solid #777; background:#c0c0c0; font-size:35px;">
+            <img src="./sliding puzzle.jpeg" style="height:40px; width:50px;">
+        </div>
+        <p style="margin:5px 0; color:white; font-size:12px; text-align:center;">Sliding Puzzle</p>
+    </div>
   </div>  
     
   <div class="window" id="todo" style="display:none;top: 50%; left:50%; transform: translate(-50%,-50%) ">
@@ -148,12 +155,12 @@
             style="display:block; width:100%; height:auto; background:#080d16; border:1px solid #35465c; border-radius:5px;">
     </canvas>
 
-    <p style="font-size:12px; color:#aab7cb;">
+    <p style="font-size:12px; color:#000000;">
       WASD for Red, Arrow Keys for Blue
     </p>
 
     <button id="pongStart"
-            style="padding:10px 24px; border:1px solid #8dbce3; border-radius:8px; background:#1c3047; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+            style="padding:10px 24px; border:1px solid #000000; border-radius:8px; background:#1c3047; color:white; font-family:Optima,sans-serif; cursor:pointer;">
       Start Game
     </button>
   </div>
@@ -179,19 +186,19 @@
       style="display:block; width:100%; max-width:400px; height:auto; margin:auto; background:#071510; border:1px solid #315b47; border-radius:5px;">
     </canvas>
 
-    <p id="snakeStatus" style="color:#78dba9;">Press Start to play</p>
+    <p id="snakeStatus" style="color:#000000;">Press Start to play</p>
 
     <button id="snakeStart"
-      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      style="padding:9px 20px; border:1px solid #000000; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
       Start Game
     </button>
 
     <button id="snakePause"
-      style="padding:9px 20px; border:1px solid #78dba9; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
+      style="padding:9px 20px; border:1px solid #000000; border-radius:8px; background:#193b2c; color:white; font-family:Optima,sans-serif; cursor:pointer;">
       Pause
     </button>
 
-    <p style="font-size:12px; color:#aab7cb;">
+    <p style="font-size:12px; color:#000000;">
       Arrow keys or WASD to move
     </p>
   </div>
@@ -230,12 +237,12 @@
                 style="width:100%; height:90px; padding:10px; margin:6px 0; box-sizing:border-box; resize:vertical;"></textarea>
 
       <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-        <span style="font-size:11px; color:#b8cbd0;">MAX 300 CHARACTERS</span>
+        <span style="font-size:11px; color:#151a1c;">MAX 300 CHARACTERS</span>
         <button type="submit">Sign the book</button>
       </div>
     </form>
 
-    <p id="visitorBookStatus" style="font-size:12px; color:#8bd8c7;" aria-live="polite"></p>
+    <p id="visitorBookStatus" style="font-size:12px; color:#000000;" aria-live="polite"></p>
 
     <hr style="border-color:#42565b;">
 
@@ -403,6 +410,71 @@
             <p id="notebookSaveStatus">All changes saved locally.</p>
         </div>
 
+    </div>
+</div>
+
+<div class="window" id="puzzleWindow"
+     style="display:none; top:50%; left:50%; transform:translate(-50%,-50%); width:430px;">
+
+    <div class="header" id="puzzleWindowheader">
+        <h3 style="flex:1; margin:0; color:rgb(0, 0, 0);">Sliding Puzzle</h3>
+        <button class="closebutton" id="puzzleClose" type="button" aria-label="Close"></button>
+    </div>
+
+    <div id="puzzleContent">
+        <p>Choose a picture, then click shuffle to start.</p>
+
+        <input id="puzzleImageInput" type="file" accept="image/*">
+
+        <div id="puzzleInfo">
+            <span>Moves: <strong id="puzzleMoves">0</strong></span>
+            <span>Time: <strong id="puzzleTime">00:00</strong></span>
+        </div>
+
+        <div id="puzzleBoard">
+            <p id="puzzleMessage">Choose an image to begin.</p>
+        </div>
+
+        <div id="puzzleControls">
+            <button id="puzzleShuffle" disabled>Shuffle</button>
+            <button id="puzzleReset" disabled>Reset</button>
+        </div>
+
+        <p id="puzzleStatus">Select a picture to get started.</p>
+    </div>
+</div>
+
+<div id="mouseVirus">
+    <div id="mousePopup">
+        <div class="mouseTitlebar">
+            <span>ADDRESS-STEALER.exe</span>
+            <button id="mouseClose">X</button>
+        </div>
+
+        <div class="mouseContent">
+            <h2>CONGRATULATIONS!</h2>
+            <p>YOU ARE ELIGIBLE TO RECIEVE THE LATEST LOGITECH MOUSE!</p>
+
+            <p>Enter your address to receive your FREE MOUSE!</p>
+
+            <input class="fakeAddress" placeholder="Enter Address Here">
+
+            <p class="mouseDisclaimer">
+                This is not a scam.
+            </p>
+
+            <button id="claimMice">CLAIM MY MOUSE!</button>
+        </div>
+    </div>
+
+    <div id="mouseInfection" style="display:none;">
+        <h1>ADDRESS LOCATED</h1>
+        <h2 id="mouseStatus">INSTALLING 500 MICE...</h2>
+        <div id="mouseProgress">
+            <div id="mouseProgressFill"></div>
+        </div>
+        <div id="mouseSwarm"></div>
+        <button id="mouseReset">HAVE A GREAT DAY</button>
     </div>
 </div>
     
