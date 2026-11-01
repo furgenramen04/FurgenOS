@@ -1,5 +1,5 @@
-# FurgenOS Version 1.0 (first ship)
-My very own WebOS that replicates a desktop operating system, such as Windows or MacOS (though understandably less featureful).
+# FurgenOS Version 2.0 (Ship #2)
+My very own WebOS that replicates a desktop operating system, taking bits and pieces from guides and other OS, (especially retro Windows)
 
 AI Usage:
 I used AI mainly to help with the troubleshooting process (Hackatime is a nightmare), and also used it mainly for JS as I am still a beginner to coding. Most CSS and HTML were written by me.
